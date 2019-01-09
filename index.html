@@ -55,6 +55,11 @@ ut:not([type]), input[type=text]:not(.browser-default), input[type=password]:not
   padding-left: 20px !important;
   z-index: 9999999999999 !important;
 }
+      #legend-container {
+          position: relative;
+          top: 200px;
+          right: 10px;
+      }      
 .legend {
 background-color: rgba(255, 255, 255);;
 border-radius: 3px;
@@ -103,8 +108,8 @@ right: 10px;
   right: 86px;
   top: 237px;
   height: 80px;
-  width: 20px;
-  z-index: 9;              
+  width: 20px;   
+  z-index: 1;    
 }   
       
 #layer_selector {
@@ -112,7 +117,7 @@ right: 10px;
     top: 70px;
     left: 10px;
     padding: 0;
-    z-index: 99999999;
+    z-index: 1;
     background-color: white;
     border-radius:4px 4px 4px;
   box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.1);
@@ -170,13 +175,15 @@ background-color: #EEE;
     </div>  
     
 <div id='map'></div>
-<div id="legend-bar"></div>    
+<div id='container'>  
+<div id="legend-bar" class='legend'></div>    
 <div id='carbon-legend' class='legend'>    
     <h4>Carbon Fee</h4>    
     <div><span style='background-color: rgba(0,0,0,0);'></span>423</div>
     <div><span style='background-color: rgba(0,0,0,0);'></span>300</div>
     <div><span style='background-color: rgba(0,0,0,0);'></span>199</div>    
 </div>
+    </div>        
 <div id='transport-legend' class='legend'>
     <h4>Carbon Fee</h4>
     <div><span style='background-color: rgba(0,0,0,0);'></span>250</div>
@@ -270,13 +277,20 @@ steps: [
     element: '#search-btn',
     intro: "At any point open the zipcode search to find information on another zipcode.",
     position: 'bottom'
-  },
-  
-  
+  }  
 ]
 });
     
 intro.start();
+
+// Fix z-index issue with the legend bar    
+intro.onchange(function(targetElement) {  
+ if(this._currentStep == 4) {
+     $('#legend-bar').css({'z-index':'999999999999999'});     
+ } else {
+     $('#legend-bar').css({'z-index':'1'});
+ }
+});   
    
 // Clicking on the search button opens the zip code prompt
 $('#search-btn').click(function(){
